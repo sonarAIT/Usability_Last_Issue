@@ -20,6 +20,7 @@
     - 音声入力
     - 反応を示す
         - ボタンを押すと音声入力に戻る
+
 ## モジュール
 - MainProcess
     - メインの流れを制御するモジュール
@@ -33,8 +34,8 @@
     - ChangeHeadLabel
     - ChangeFace
 - FunnyUtil
-    -　面白さの判定を行うモジュール
-    -　JudgeFunny
+    - 面白さの判定を行うモジュール
+    - JudgeFunny
 - VoicePlayer
     - 音声を再生するモジュール
     - PlayVoice

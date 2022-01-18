@@ -15,16 +15,16 @@ class UI:
         event, values = self.WINDOW.read()
         return (event, values)
 
-    def UpdateMainLabel(self, text):
+    def UpdateMainLabel(self, text) -> None:
         self.WINDOW["-MAIN_LABEL-"].Update(text)
 
-    def UpdateHeadLabel(self, text):
+    def UpdateHeadLabel(self, text) -> None:
         self.WINDOW["-HEAD_LABEL-"].Update(text)
 
-    def UpdateFace(self, faceName):
+    def UpdateFace(self, faceName) -> None:
         self.WINDOW["-FACE_IMAGE-"].Update(faceName)
 
-    def Close(self):
+    def Close(self) -> None:
         self.WINDOW.close()
 
 

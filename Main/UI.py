@@ -3,41 +3,55 @@ from FaceName import FaceName
 
 
 class UI:
-    def __init__(self) -> None:
+    def __init__(self, MainButtonHandler) -> None:
+        self.MainButtonHandler = MainButtonHandler
         LAYOUT = [
             [sg.Text("", font=("", 50), key="-HEAD_LABEL-")],
-            [sg.Image(FaceName.Normal, key="-FACE_IMAGE-"), sg.Text("", font=("", 30), key="-MAIN_LABEL-")],
-            [sg.Button("スタート", key="-START_BUTTON-")]
+            [sg.Image(FaceName.Normal, key="-FACE_IMAGE-"),
+             sg.Text("", font=("", 30), key="-MAIN_LABEL-")],
+            [sg.Button("", key="-START_BUTTON-")]
         ]
-        self.WINDOW = sg.Window("ほげ", LAYOUT, element_justification='c')
+        self.WINDOW = sg.Window("Gyaha", LAYOUT, finalize=True, element_justification='c')
 
-    def Read(self) -> None:
-        event, values = self.WINDOW.read()
-        return (event, values)
+    def MainLoop(self) -> None:
+        while True:
+            event, values = self.WINDOW.read()
+            if event == sg.WIN_CLOSED:
+                self.Close()
+                break
 
-    def UpdateMainLabel(self, text) -> None:
+            if event == "-START_BUTTON-":
+                self.MainButtonHandler()
+
+    def SetMainLabel(self, text: str) -> None:
         self.WINDOW["-MAIN_LABEL-"].Update(text)
 
-    def UpdateHeadLabel(self, text) -> None:
+    def SetHeadLabel(self, text: str) -> None:
         self.WINDOW["-HEAD_LABEL-"].Update(text)
 
-    def UpdateFace(self, faceName) -> None:
+    def SetFace(self, faceName: str) -> None:
         self.WINDOW["-FACE_IMAGE-"].Update(faceName)
+
+    def SetButtonText(self, text: str) -> None:
+        self.WINDOW["-START_BUTTON-"].Update(text)
+
+    def SetButtonDisable(self, flag: bool) -> None:
+        self.WINDOW["-START_BUTTON-"].Update(disabled=flag)
 
     def Close(self) -> None:
         self.WINDOW.close()
 
 
 if __name__ == "__main__":
-    ui = UI()
-
-    while True:
-        event, values = ui.Read()
-        if event == sg.WIN_CLOSED:
-            ui.Close()
-            break
-
-        if event == "-START_BUTTON-":
-            ui.UpdateMainLabel("ウホウホウホウホウホウホウホウホウホウホ")
-            ui.UpdateHeadLabel("ウホウホウホウホウホ")
-            ui.UpdateFace(FaceName.Funny)
+    ui = None
+    def testButtonHander():
+        ui.SetMainLabel("ウホウホウホウホウホウホウホウホウホウホ")
+        ui.SetHeadLabel("ウホウホウホウホウホ")
+        ui.SetFace(FaceName.Funny)
+        ui.SetButtonText("ウホ")
+        ui.SetButtonDisable(True)
+    ui = UI(testButtonHander)
+    ui.SetMainLabel("スタートボタンを押してください")
+    ui.SetHeadLabel("Gyaha")
+    ui.SetButtonText("スタート")
+    ui.MainLoop()

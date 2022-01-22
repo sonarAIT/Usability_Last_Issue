@@ -1,16 +1,24 @@
+from re import L
+
+
 class MainProcess:
     def __init__():
         pass
 
-    def runFlontScene():
+    def StartButtonHandler():
         pass
 
-    def runVoiceInputScene():
+    def VoiceReadScene():
         pass
 
-    def runResultScene():
+    def VoiceReadErrorScene():
         pass
 
+    def JudgeTimeScene():
+        pass
+
+    def ResultScene():
+        pass
 
 if __name__ == "__main__":
     pass

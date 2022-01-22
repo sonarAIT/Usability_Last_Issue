@@ -20,25 +20,66 @@
     - 音声入力
     - 反応を示す
         - ボタンを押すと音声入力に戻る
-
 ## モジュール
 - MainProcess
     - メインの流れを制御するモジュール
-    - flontScene
-    - voiceInputScene
-    - resultScene
+    - __init__
+        - LaughterPlayer初期化
+            - 音声読み込み
+        - 画面初期化
+            - UI()
+            - SetMainLabel(スタートボタンを押してください)
+            - SetHeadLabel(Gyaha)
+            - SetFace(default)
+            - SetButtonText(スタート)
+        - PySimpleGUI mainloop launch
+    - StartButton
+        - 画面を変更(VoiceReadScene)
+            - SetButtonDisable(True)
+            - SetMainLabel(Gyaha)
+            - SetHeadLabel(ダジャレを言ってください)
+            - SetFace(default)
+        - VoiceReader
+            - strを受け取る
+            - エラー時(UpdateUIVoiceReadErrorScene)
+                - SetMainLabel(うまく聞き取れませんでした．もう一度お願いします．)
+                - 音再生するかも
+                - // SetHeadLabel
+        - 判定待ち(JudgeTimeScene)
+            - SoundPlayer.PlayCalcing
+            - SetMainLabel(判定中)
+            - SetHeadLabel(言ったダジャレ)
+            - sleep 5s
+        - 結果表示(ResultScene)
+            - 面白さに応じて分岐
+            - SoundPlayer.Play
+            - SetMainLabel(判定結果)
+            - // SetHeadLabel
+            - SetFace
+            - SetButtonText(もう一度)
+            - SetButtonDisable(False)
 - UI
     - UIの制御を行うモジュール
-    - GetEvent
-    - ChangeMainLabel
-    - ChangeHeadLabel
-    - ChangeFace
+    - __init__
+        - UIを用意
+            - MainLabel
+            - HeadLabel
+            - FaceImage
+            - StartButton
+    - SetMainLabel
+    - SetHeadLabel
+    - SetFace
+    - SetButtonText
+    - SetButtonDisable
+    - MainLoop
 - FunnyUtil
     - 面白さの判定を行うモジュール
     - JudgeFunny
-- VoicePlayer
-    - 音声を再生するモジュール
-    - PlayVoice
+- SoundPlayer
+    - 効果音を再生するモジュール
+    - PlayCalcing
+    - PlayLaughter1
+    - PlayLaughter2
 - VoiceReader
     - 音声を入力するモジュール
     - ReadVoice

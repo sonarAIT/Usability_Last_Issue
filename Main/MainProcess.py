@@ -1,21 +1,79 @@
+import threading
+import time
+from SoundPlayer import SoundPlayer
+from LaughtPlayer import LaughtPlayer
+from UI import UI
+from FaceName import FaceName
+from VoiceReader import VoiceReader
+from FunnyUtil import FunnyUtil
+
+
 class MainProcess:
-    def __init__():
-        pass
+    def __init__(self) -> None:
+        self.__resultDict = {0: self.__badResult, 1: self.__goodResult}
+        self.__soundPlayer = SoundPlayer()
+        self.__voiceReader = VoiceReader()
+        self.__ui = UI(self.StartButtonHandler)
+        self.__ui.SetMainLabel('スタートボタンを押してください')
+        self.__ui.SetHeadLabel('Gyaha')
+        self.__ui.SetFace(FaceName.Normal)
+        self.__ui.SetButtonText('スタート')
+        self.__ui.MainLoop()
 
-    def StartButtonHandler():
-        pass
+    def StartButtonHandler(self) -> None:
+        self.__soundPlayer.StopSound()
 
-    def VoiceReadScene():
-        pass
+        def startButtonProcess():
+            recText = self.__voiceReadScene()
+            resJudge = self.__judgeScene(recText)
+            self.__resultScene(resJudge)
 
-    def VoiceReadErrorScene():
-        pass
+        thread = threading.Thread(target=startButtonProcess)
+        thread.start()
 
-    def JudgeTimeScene():
-        pass
+    def __voiceReadScene(self) -> str:
+        self.__ui.SetButtonDisable(True)
+        self.__ui.SetMainLabel('ダジャレを言ってください')
+        self.__ui.SetHeadLabel('Gyaha')
+        self.__ui.SetFace(FaceName.Normal)
 
-    def ResultScene():
-        pass
+        while True:
+            retText = self.__voiceReader.ReadVoice()
+            if retText != VoiceReader.ERROR_CODE:
+                break
+            self.__voiceReadErrorScene()
+            return "おっぱいがいっぱい"
+
+    def __voiceReadErrorScene(self):
+        self.__ui.SetMainLabel('うまく聞き取れませんでした．\nもう一度お願いします．')
+        # 音再生するかも
+
+    def __judgeScene(self, recText: str) -> int:
+        self.__soundPlayer.PlaySound('CALCING')
+        self.__ui.SetMainLabel('判定中')
+        self.__ui.SetHeadLabel(recText)
+
+        dummyThread = threading.Thread(target=time.sleep, args=(5,))
+        dummyThread.start()
+        resJudge = FunnyUtil.JudgeFunny(recText)
+        dummyThread.join()
+        return resJudge
+
+    def __resultScene(self, resJudge: int):
+        self.__soundPlayer.StopSound()
+        self.__ui.SetButtonText('もう一度')
+        self.__ui.SetButtonDisable(False)
+        self.__resultDict[resJudge]()
+
+    def __goodResult(self):
+        LaughtPlayer.PlayLaught(self.__soundPlayer)
+        self.__ui.SetMainLabel('判定結果: おもしろ〜い！！！！！！！\n！！！！！！！')
+        self.__ui.SetFace(FaceName.Funny)
+
+    def __badResult(self):
+        self.__ui.SetMainLabel('判定結果: つまらないです。')
+        self.__ui.SetFace(FaceName.Sad)
+
 
 if __name__ == "__main__":
-    pass
+    main = MainProcess()

@@ -1,32 +1,46 @@
 import wave
-import numpy as np
-import sounddevice as sd
 from SoundNameRepository import SoundNameRepository
-
+import pyaudio
 
 class SoundPlayer:
     def __init__(self) -> None:
         self.__soundMap = {}
+        self.__pyaudio = pyaudio.PyAudio()
         for name, path in SoundNameRepository.GetAll():
             try:
-                with wave.open(path) as wf:
-                    fs = wf.getframerate()
-                    data = wf.readframes(wf.getnframes())
-                    data = np.frombuffer(data, dtype='int16')
-
-                    self.__soundMap[name] = (data, fs)
+                self.__soundMap[name] = wave.open(path)
             except Exception as e:
                 print('ERROR: 音声読み込み中にエラーが発生しました')
                 print(type(e))
                 print(e)
+        self.__streams = []
 
     def PlaySound(self, soundName: str) -> None:
-        sound = self.__soundMap[soundName]
-        sd.play(sound[0], sound[1])
-        # sd.play(sound[0], sound[1] * 2) # stereo
+        wf = self.__soundMap[soundName]
+
+        def callback(in_data, frame_count, time_info, status):
+            data = wf.readframes(frame_count)
+            return (data, pyaudio.paContinue)
+
+        stream = self.__pyaudio.open(format=self.__pyaudio.get_format_from_width(wf.getsampwidth()),
+                        channels=wf.getnchannels(),
+                        rate=wf.getframerate(),
+                        output=True,
+                        stream_callback=callback)
+
+        stream.start_stream()
 
     def StopSound(self) -> None:
-        sd.stop()
+        for stream in self.__streams:
+            stream.close()
+        self.__streams.clear()
+
+    def __del__(self) -> None:
+        for stream in self.__streams:
+            stream.close()
+        for sound in self.__soundMap:
+            self.__soundMap[sound].close()
+        self.__pyaudio.terminate()
 
 
 if __name__ == "__main__":
@@ -35,3 +49,4 @@ if __name__ == "__main__":
     soundPlayer.PlaySound('CALCING')
     time.sleep(3)
     soundPlayer.StopSound()
+    del soundPlayer

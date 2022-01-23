@@ -4,14 +4,15 @@ from FaceName import FaceName
 
 class UI:
     def __init__(self, MainButtonHandler) -> None:
-        self.MainButtonHandler = MainButtonHandler
+        self.__mainButtonHandler = MainButtonHandler
         LAYOUT = [
             [sg.Text("", font=("", 50), key="-HEAD_LABEL-")],
             [sg.Image(FaceName.Normal, key="-FACE_IMAGE-"),
              sg.Text("", font=("", 30), key="-MAIN_LABEL-")],
             [sg.Button("", key="-START_BUTTON-")]
         ]
-        self.WINDOW = sg.Window("Gyaha", LAYOUT, finalize=True, element_justification='c')
+        self.WINDOW = sg.Window(
+            "Gyaha", LAYOUT, finalize=True, element_justification='c')
 
     def MainLoop(self) -> None:
         while True:
@@ -21,7 +22,7 @@ class UI:
                 break
 
             if event == "-START_BUTTON-":
-                self.MainButtonHandler()
+                self.__mainButtonHandler()
 
     def SetMainLabel(self, text: str) -> None:
         self.WINDOW["-MAIN_LABEL-"].Update(text)
@@ -44,6 +45,7 @@ class UI:
 
 if __name__ == "__main__":
     ui = None
+
     def testButtonHander():
         ui.SetMainLabel("ウホウホウホウホウホウホウホウホウホウホ")
         ui.SetHeadLabel("ウホウホウホウホウホ")

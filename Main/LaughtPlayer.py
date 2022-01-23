@@ -2,16 +2,14 @@ from SoundPlayer import SoundPlayer
 
 
 class LaughtPlayer:
-    def __init__(self, soundPlayer: SoundPlayer):
-        self.__soundPlayer = soundPlayer
-
-    def PlayLaught(self):
+    def PlayLaught(soundPlayer: SoundPlayer):
         for i in range(1, 6):
-            self.__soundPlayer.PlaySound(f"LAUGHTER{i}")
+            soundPlayer.PlaySound(f"LAUGHTER{i}")
 
 
 if __name__ == "__main__":
     import time
-    laughtPlayer = LaughtPlayer(SoundPlayer())
-    laughtPlayer.PlayLaught()
+    soundPlayer = SoundPlayer()
+    LaughtPlayer.PlayLaught(soundPlayer)
     time.sleep(6)
+    del soundPlayer

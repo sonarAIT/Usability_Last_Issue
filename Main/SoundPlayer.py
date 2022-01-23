@@ -2,10 +2,12 @@ import wave
 from SoundNameRepository import SoundNameRepository
 import pyaudio
 
+
 class SoundPlayer:
     def __init__(self) -> None:
-        self.__soundMap = {}
         self.__pyaudio = pyaudio.PyAudio()
+        self.__streams = []
+        self.__soundMap = {}
         for name, path in SoundNameRepository.GetAll():
             try:
                 self.__soundMap[name] = wave.open(path)
@@ -13,7 +15,6 @@ class SoundPlayer:
                 print('ERROR: 音声読み込み中にエラーが発生しました')
                 print(type(e))
                 print(e)
-        self.__streams = []
 
     def PlaySound(self, soundName: str) -> None:
         wf = self.__soundMap[soundName]
@@ -23,10 +24,10 @@ class SoundPlayer:
             return (data, pyaudio.paContinue)
 
         stream = self.__pyaudio.open(format=self.__pyaudio.get_format_from_width(wf.getsampwidth()),
-                        channels=wf.getnchannels(),
-                        rate=wf.getframerate(),
-                        output=True,
-                        stream_callback=callback)
+                                     channels=wf.getnchannels(),
+                                     rate=wf.getframerate(),
+                                     output=True,
+                                     stream_callback=callback)
 
         stream.start_stream()
 

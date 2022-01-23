@@ -1,13 +1,9 @@
 class SoundNameRepository:
-    def __init__(self) -> None:
-        PATH = "./Main/wav/"
+    __PATH = "./Main/wav/"
+    __SOUND_NAME_DICT = {'PATH': __PATH, 'CALCING': __PATH + "calcing.wav"}
 
-        self.SoundNameDict = {}
-        self.SoundNameDict['PATH'] = PATH
-        self.SoundNameDict['CALCING'] = PATH + "calcing.wav"
+    def get(name: str) -> str:
+        return SoundNameRepository.__SOUND_NAME_DICT[name]
 
-    def get(self, name: str) -> str:
-        return self.SoundNameDict[name]
-
-    def getAll(self) -> list[str]:
-        return [(sound, self.SoundNameDict[sound]) for sound in self.SoundNameDict]
+    def getAll() -> list[str]:
+        return [(sound, SoundNameRepository.__SOUND_NAME_DICT[sound]) for sound in SoundNameRepository.__SOUND_NAME_DICT]

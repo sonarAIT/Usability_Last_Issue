@@ -1,2 +1,0 @@
-class SoundName:
-    pass

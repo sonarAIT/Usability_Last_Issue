@@ -10,4 +10,4 @@ class SoundNameRepository:
         return self.SoundNameDict[name]
 
     def getAll(self) -> list[str]:
-        return [self.SoundNameDict[sound] for sound in self.SoundNameDict]
+        return [(sound, self.SoundNameDict[sound]) for sound in self.SoundNameDict]

@@ -77,9 +77,11 @@
     - JudgeFunny
 - SoundPlayer
     - 効果音を再生するモジュール
-    - PlayCalcing
-    - PlayLaughter1
-    - PlayLaughter2
+    - __init__
+    - PlaySound
+- LaughtPlayer
+    - 笑い声（たくさん）を再生するモジュール
+    - PlayLauchter
 - VoiceReader
     - 音声を入力するモジュール
     - ReadVoice

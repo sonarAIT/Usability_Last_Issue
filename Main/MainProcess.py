@@ -67,6 +67,7 @@ class MainProcess:
 
     def __goodResult(self):
         LaughtPlayer.PlayLaught(self.__soundPlayer)
+        self.__soundPlayer.PlaySound('PHRASE')
         self.__ui.SetMainLabel('判定結果: おもしろ〜い！！！！！！！\n！！！！！！！')
         self.__ui.SetFace(FaceName.Funny)
 

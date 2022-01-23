@@ -30,9 +30,11 @@ class SoundPlayer:
                                      stream_callback=callback)
 
         stream.start_stream()
+        self.__streams.append(stream)
 
     def StopSound(self) -> None:
         for stream in self.__streams:
+            stream.stop_stream()
             stream.close()
         self.__streams.clear()
 
@@ -50,4 +52,5 @@ if __name__ == "__main__":
     soundPlayer.PlaySound('CALCING')
     time.sleep(3)
     soundPlayer.StopSound()
+    time.sleep(3)
     del soundPlayer

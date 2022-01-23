@@ -34,9 +34,10 @@ class SoundPlayer:
 
     def StopSound(self) -> None:
         for stream in self.__streams:
-            stream.stop_stream()
             stream.close()
         self.__streams.clear()
+        for sound in self.__soundMap:
+            self.__soundMap[sound].rewind()
 
     def __del__(self) -> None:
         for stream in self.__streams:

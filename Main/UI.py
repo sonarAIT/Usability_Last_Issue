@@ -6,13 +6,14 @@ class UI:
     def __init__(self, MainButtonHandler) -> None:
         self.__mainButtonHandler = MainButtonHandler
         LAYOUT = [
-            [sg.Text("", font=("", 50), key="-HEAD_LABEL-")],
-            [sg.Image(FaceName.Normal, key="-FACE_IMAGE-"),
-             sg.Text("", font=("", 30), key="-MAIN_LABEL-")],
-            [sg.Button("", key="-START_BUTTON-")]
+            [sg.Column(
+                [[sg.Text("", font=("", 50), key="-HEAD_LABEL-")]])],
+            [sg.Frame('', [[sg.Image(FaceName.Normal, key="-FACE_IMAGE-"), sg.Text("", font=(
+                "", 30), expand_x=True, justification='c', key="-MAIN_LABEL-")]], expand_x=True)],
+            [sg.Column([[sg.Button("", key="-START_BUTTON-")]])]
         ]
         self.WINDOW = sg.Window(
-            "Gyaha", LAYOUT, finalize=True, element_justification='c')
+            "Gyaha", LAYOUT, size=(900, 300), element_justification='c', finalize=True)
 
     def MainLoop(self) -> None:
         while True:

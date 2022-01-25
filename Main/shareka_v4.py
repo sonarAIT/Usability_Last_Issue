@@ -26,7 +26,7 @@ class Shareka:
             ['ァ', 'ア'], ['ィ', 'イ'], ['ゥ', 'ウ'], ['ェ', 'エ'], ['ォ', 'オ'], ['ー', ''], ['"', ''], ["'", '']]
         self.kaburi = n
         self.sentence = sentence
-        self.mecab = MeCab.Tagger("-Ochasen -d /usr/local/lib/mecab/dic/mecab-ipadic-neologd")
+        self.mecab = MeCab.Tagger("-Ochasen -d ./Main/mecab-ipadic-neologd")
         self.kana_pattern = self.make_kana_pattern(sentence)
         self.preprocessed_pattern = self.preprocessing(self.kana_pattern)
         self.devided_pattern = self.devide(self.preprocessed_pattern)

@@ -32,6 +32,7 @@ class MainProcess:
         thread.start()
 
     def __voiceReadScene(self) -> str:
+        self.__soundPlayer.PlaySound('START')
         self.__ui.SetButtonDisable(True)
         self.__ui.SetMainLabel('ダジャレを言ってください')
         self.__ui.SetHeadLabel('Gyaha')
@@ -42,11 +43,13 @@ class MainProcess:
             if retText != VoiceReader.ERROR_CODE:
                 break
             self.__voiceReadErrorScene()
-            return "おっぱいがいっぱい"
+
+        return retText
 
     def __voiceReadErrorScene(self):
+        self.__soundPlayer.StopSound()
+        self.__soundPlayer.PlaySound('ERROR')
         self.__ui.SetMainLabel('うまく聞き取れませんでした．\nもう一度お願いします．')
-        # 音再生するかも
 
     def __judgeScene(self, recText: str) -> int:
         self.__soundPlayer.PlaySound('CALCING')
@@ -72,6 +75,7 @@ class MainProcess:
         self.__ui.SetFace(FaceName.Funny)
 
     def __badResult(self):
+        self.__soundPlayer.PlaySound('BAD')
         self.__ui.SetMainLabel('判定結果: つまらないです。')
         self.__ui.SetFace(FaceName.Sad)
 

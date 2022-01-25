@@ -78,7 +78,11 @@ class MainProcess:
         self.__soundPlayer.PlaySound('BAD')
         self.__ui.SetMainLabel('判定結果: つまらないです。')
         self.__ui.SetFace(FaceName.Sad)
+    
+    def __del__(self):
+        del self.__soundPlayer
 
 
 if __name__ == "__main__":
     main = MainProcess()
+    del main

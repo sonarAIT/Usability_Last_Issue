@@ -1,0 +1,11 @@
+alkana==0.0.3
+fuzzysearch==0.7.3
+MeCab==0.996.3
+numpy==1.20.3
+PyAudio==0.2.11
+pykakasi==2.2.1
+PySimpleGUI==4.56.0
+sounddevice==0.4.4
+SpeechRecognition==3.8.1
+torch==1.8.1
+ttslearn==0.2.2

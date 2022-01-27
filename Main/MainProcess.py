@@ -75,9 +75,11 @@ class MainProcess:
         self.__ui.SetFace(FaceName.Funny)
 
     def __badResult(self):
-        self.__soundPlayer.PlaySound('BAD')
         self.__ui.SetMainLabel('判定結果: つまらないです。')
         self.__ui.SetFace(FaceName.Sad)
+        self.__soundPlayer.PlaySound('BAD')
+        time.sleep(2)
+        self.__soundPlayer.PlaySound('BADPHRASE')
     
     def __del__(self):
         del self.__soundPlayer

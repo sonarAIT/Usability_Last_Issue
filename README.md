@@ -40,3 +40,4 @@ https://github.com/vaaaaanquish/dajare-detector/blob/main/shareka/shareka_v4.py
 
 ## 効果音素材
 OtoLogic(CC BY 4.0)
+On-Jin ～音人～
